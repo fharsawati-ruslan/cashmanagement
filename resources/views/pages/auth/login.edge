@@ -1,32 +1,387 @@
-@layout()
-  <div class="form-container">
-    <div>
-      <h1>Login</h1>
-      <p>Enter your email and password below to log in</p>
-    </div>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <div>
-      @form({ route: 'session.store', method: 'POST' })
-        <div>
-          @field.root({ name: 'email' })
-            @!field.label({ text: 'Email' })
-            @!input.control({ type: 'email' })
-            @!field.error()
-          @end
+  <title>Agro Oasis — Cash Management</title>
+
+  @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+
+<body class="login-page">
+
+  <main class="login-shell">
+
+    {{-- LEFT: LOGIN --}}
+    <section class="login-panel">
+
+      <header class="login-header">
+
+        <a href="/" class="brand">
+          <div class="brand-logo">
+            AO
+          </div>
+
+          <div class="brand-text">
+            <div class="brand-name">
+              Agro Oasis
+            </div>
+
+            <div class="brand-subtitle">
+              CASH MANAGEMENT
+            </div>
+
+            <div class="brand-tagline">
+              Finance & Treasury System
+            </div>
+          </div>
+        </a>
+
+        <button
+          type="button"
+          id="themeToggle"
+          class="theme-toggle"
+          aria-label="Toggle dark mode"
+        >
+          <span id="themeIcon">☀️</span>
+        </button>
+
+      </header>
+
+
+      {{-- LIVE CLOCK --}}
+      <div class="live-clock-box">
+
+        <div class="live-status">
+          <span class="live-dot"></span>
+          <span>LIVE</span>
         </div>
 
-        <div>
-          @field.root({ name: 'password' })
-            @!field.label({ text: 'Password' })
-            @!input.control({ type: 'password' })
-            @!field.error()
-          @end
+        <div id="liveClock" class="live-clock">
+          00:00:00
         </div>
 
-        <div>
-          @!button({ text: 'Login', type: 'submit' })
+        <div id="liveDate" class="live-date">
+          Memuat tanggal...
         </div>
-      @end
-    </div>
-  </div>
-@end
+
+      </div>
+
+
+      <div class="login-content">
+
+        <div class="welcome-heading">
+          <h1>Selamat Datang!</h1>
+
+          <p>
+            Silakan masuk untuk melanjutkan
+            ke sistem Cash Management Agro Oasis.
+          </p>
+        </div>
+
+
+        {{-- FLASH ERROR --}}
+        @if(flashMessages.has('error'))
+          <div class="alert alert-error">
+            <span>⚠️</span>
+
+            <span>
+              {{ flashMessages.get('error') }}
+            </span>
+          </div>
+        @endif
+
+
+        @form({
+          route: 'session.store',
+          method: 'POST'
+        })
+
+          {{-- EMAIL --}}
+          <div class="form-group">
+
+            <label for="email">
+              Username atau Email
+            </label>
+
+            <div class="input-wrapper">
+
+              <span class="input-icon">
+                👤
+              </span>
+
+              <input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="Masukkan email Anda"
+                autocomplete="username"
+                required
+              >
+
+            </div>
+
+          </div>
+
+
+          {{-- PASSWORD --}}
+          <div class="form-group">
+
+            <label for="password">
+              Password
+            </label>
+
+            <div class="input-wrapper">
+
+              <span class="input-icon">
+                🔒
+              </span>
+
+              <input
+                id="password"
+                name="password"
+                type="password"
+                placeholder="Masukkan password"
+                autocomplete="current-password"
+                required
+              >
+
+              <button
+                type="button"
+                id="passwordToggle"
+                class="password-toggle"
+                aria-label="Tampilkan password"
+              >
+                👁
+              </button>
+
+            </div>
+
+          </div>
+
+
+          {{-- OPTIONS --}}
+          <div class="form-options">
+
+            <label class="remember-me">
+
+              <input
+                type="checkbox"
+                name="remember"
+                value="1"
+              >
+
+              <span>Ingat saya</span>
+
+            </label>
+
+            <a href="#" class="forgot-link">
+              Lupa password?
+            </a>
+
+          </div>
+
+
+          {{-- LOGIN --}}
+          <button
+            type="submit"
+            class="login-button"
+          >
+
+            <span class="login-button-icon">
+              🔐
+            </span>
+
+            <span>
+              Masuk ke Sistem
+            </span>
+
+          </button>
+
+
+          {{-- DIVIDER --}}
+          <div class="divider">
+            <span>atau</span>
+          </div>
+
+
+          {{-- SSO --}}
+          <button
+            type="button"
+            class="sso-button"
+            disabled
+          >
+
+            <span>
+              🏢
+            </span>
+
+            <span>
+              Masuk dengan Akun Perusahaan
+            </span>
+
+          </button>
+
+        @end
+
+
+        <div class="security-info">
+
+          <span class="security-icon">
+            🛡️
+          </span>
+
+          <div>
+            <strong>Sistem Terproteksi</strong>
+
+            <p>
+              Data transaksi dan informasi keuangan
+              dilindungi dengan keamanan berlapis.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <footer class="login-footer">
+
+        <span>
+          © 2026 Agro Oasis
+        </span>
+
+        <span>
+          •
+        </span>
+
+        <span>
+          Internal Finance System
+        </span>
+
+      </footer>
+
+    </section>
+
+
+    {{-- RIGHT: HERO --}}
+    <section class="hero-panel">
+
+      <div class="hero-background"></div>
+
+      <div class="hero-overlay"></div>
+
+      <div class="hero-content">
+
+        <div class="hero-badge">
+          AGRO OASIS
+        </div>
+
+        <h2>
+          Kelola Arus Kas
+          <br>
+
+          <span>
+            dengan Mudah & Terpercaya
+          </span>
+        </h2>
+
+        <p class="hero-description">
+          Satu sistem untuk mencatat, mengontrol,
+          dan memantau seluruh transaksi keuangan
+          perusahaan secara terintegrasi.
+        </p>
+
+
+        <div class="feature-list">
+
+          <div class="feature-item">
+            <span>✓</span>
+            <div>
+              <strong>Cash In & Cash Out</strong>
+              <small>
+                Pencatatan transaksi yang terstruktur
+              </small>
+            </div>
+          </div>
+
+          <div class="feature-item">
+            <span>✓</span>
+            <div>
+              <strong>Kas & Bank</strong>
+              <small>
+                Pantau saldo secara real-time
+              </small>
+            </div>
+          </div>
+
+          <div class="feature-item">
+            <span>✓</span>
+            <div>
+              <strong>Approval & Control</strong>
+              <small>
+                Setiap transaksi dapat dikontrol
+              </small>
+            </div>
+          </div>
+
+          <div class="feature-item">
+            <span>✓</span>
+            <div>
+              <strong>Invoice Digital</strong>
+              <small>
+                Simpan bukti transaksi dengan mudah
+              </small>
+            </div>
+          </div>
+
+          <div class="feature-item">
+            <span>✓</span>
+            <div>
+              <strong>Laporan Keuangan</strong>
+              <small>
+                Informasi siap digunakan kapan saja
+              </small>
+            </div>
+          </div>
+
+        </div>
+
+
+        <div class="balance-card">
+
+          <div class="balance-header">
+            <span>
+              Total Saldo Kas
+            </span>
+
+            <span class="balance-live">
+              ● LIVE
+            </span>
+          </div>
+
+          <div class="balance-value">
+            Rp 2.450.750.000
+          </div>
+
+          <div class="balance-footer">
+            <span class="balance-up">
+              ↑ 12,5%
+            </span>
+
+            <span>
+              dibanding bulan lalu
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+</body>
+</html>
