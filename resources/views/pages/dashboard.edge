@@ -13,9 +13,11 @@
           CASH MANAGEMENT
         </span>
 
-        <h1>
-          Selamat Datang, {{ user.fullName || user.email }} 👋
-        </h1>
+ <h1>
+  Selamat Datang,
+  {{ user?.fullName || user?.email || 'User' }}
+  👋
+</h1>
 
         <p>
           Kelola arus kas Agro Oasis dengan mudah,
@@ -23,12 +25,12 @@
         </p>
       </div>
 
-      <a
-        href="#"
-        class="quick-cash-button"
-      >
-        + Catat Transaksi
-      </a>
+     <a
+  href="/transactions/create"
+  class="quick-cash-button"
+>
+  + Catat Transaksi
+</a>
 
     </section>
 
@@ -44,7 +46,9 @@
         <div>
           <span>Total Saldo Kas</span>
 
-          <strong>Rp 0</strong>
+          <strong id="cashBalance">
+  Rp {{ summary.cashBalance.toLocaleString('id-ID') }}
+</strong>
 
           <small>
             Saldo saat ini
@@ -63,7 +67,9 @@
         <div>
           <span>Total Cash In</span>
 
-          <strong>Rp 0</strong>
+         <strong id="totalCashIn">
+  Rp {{ summary.totalCashIn.toLocaleString('id-ID') }}
+</strong>
 
           <small>
             Belum ada transaksi
@@ -82,7 +88,9 @@
         <div>
           <span>Total Cash Out</span>
 
-          <strong>Rp 0</strong>
+          <strong id="totalCashOut">
+  Rp {{ summary.totalCashOut.toLocaleString('id-ID') }}
+</strong>
 
           <small>
             Belum ada transaksi
@@ -101,7 +109,9 @@
         <div>
           <span>Saldo Bank</span>
 
-          <strong>Rp 0</strong>
+          <strong id="bankBalance">
+  Rp {{ summary.bankBalance.toLocaleString('id-ID') }}
+</strong>
 
           <small>
             Belum ada rekening
@@ -127,18 +137,95 @@
             </p>
           </div>
 
-          <a href="#">
-            Lihat Semua
-          </a>
+          <a href="/transactions">
+  Lihat Semua
+</a>
 
         </div>
 
 
-        <div class="empty-transactions">
+        <div
+  class="empty-transactions"
+  id="transactionsContainer"
+>
+  @if(summary.latestTransactions.length === 0)
 
-          <div class="empty-icon">
-            💸
+    <div id="emptyTransactionState">
+
+      <div class="empty-icon">
+        💸
+      </div>
+
+      <h3>
+        Belum ada transaksi
+      </h3>
+
+      <p>
+        Transaksi Cash In dan Cash Out
+        yang kamu catat akan muncul di sini.
+      </p>
+
+      <a
+        href="{{ route('transactions.create') }}"
+        class="empty-button"
+      >
+        Catat Cash In
+      </a>
+
+    </div>
+
+  @else
+
+    <div
+      id="transactionList"
+      class="dashboard-transaction-list"
+    >
+
+      @each(transaction in summary.latestTransactions)
+
+        <a
+          href="{{ route('transactions.show', { id: transaction.id }) }}"
+          class="dashboard-transaction-item"
+        >
+
+          <div class="dashboard-transaction-icon">
+            @if(transaction.type === 'cash_in')
+              ↗
+            @else
+              ↘
+            @end
           </div>
+
+          <div class="dashboard-transaction-info">
+
+            <strong>
+              {{ transaction.transactionCode }}
+            </strong>
+
+            <small>
+              {{ transaction.category }}
+              •
+              {{ transaction.transactionDate }}
+            </small>
+
+          </div>
+
+          <div
+            class="dashboard-transaction-amount
+              {{ transaction.type === 'cash_in' ? 'income' : 'expense' }}"
+          >
+            {{ transaction.type === 'cash_in' ? '+' : '-' }}
+            Rp {{ transaction.amount.toLocaleString('id-ID') }}
+          </div>
+
+        </a>
+
+      @endeach
+
+    </div>
+
+  @end
+</div>
 
           <h3>
             Belum ada transaksi
@@ -150,11 +237,11 @@
           </p>
 
           <a
-            href="#"
-            class="empty-button"
-          >
-            Catat Cash In
-          </a>
+  href="/transactions/create?type=cash_in"
+  class="empty-button"
+>
+  Catat Cash In
+</a>
 
         </div>
 
@@ -178,7 +265,7 @@
 
         <div class="quick-actions">
 
-          <a href="#" class="quick-action">
+          <a href="/transactions/create?type=cash_in" class="quick-action">
 
             <span>↗</span>
 
@@ -193,7 +280,7 @@
           </a>
 
 
-          <a href="#" class="quick-action">
+           <a href="/transactions/create?type=cash_out" class="quick-action">
 
             <span>↘</span>
 
@@ -208,7 +295,7 @@
           </a>
 
 
-          <a href="#" class="quick-action">
+          <a href="/transactions" class="quick-action">
 
             <span>🧾</span>
 
@@ -223,7 +310,7 @@
           </a>
 
 
-          <a href="#" class="quick-action">
+          <a href="/transactions" class="quick-action">
 
             <span>📊</span>
 

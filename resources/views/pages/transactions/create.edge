@@ -1,0 +1,460 @@
+@layout()
+
+<div class="dashboard-page">
+
+  <main class="dashboard-content">
+
+    {{-- ========================================================= --}}
+    {{-- HEADER                                                     --}}
+    {{-- ========================================================= --}}
+
+    <section class="dashboard-welcome">
+
+      <div>
+
+        <span class="dashboard-eyebrow">
+          CASH MANAGEMENT
+        </span>
+
+        <h1>
+          Catat Transaksi
+        </h1>
+
+        <p>
+          Tambahkan transaksi Cash In atau Cash Out Agro Oasis.
+        </p>
+
+      </div>
+
+      <a
+        href="{{ route('transactions.index') }}"
+        class="quick-cash-button secondary"
+      >
+        ← Kembali
+      </a>
+
+    </section>
+
+
+    {{-- ========================================================= --}}
+    {{-- FORM                                                       --}}
+    {{-- ========================================================= --}}
+
+    <section class="transaction-form-card">
+
+      <form
+        method="POST"
+        action="{{ route('transactions.store') }}"
+        enctype="multipart/form-data"
+      >
+         {{ csrfField() }}
+
+        {{-- ===================================================== --}}
+        {{-- JENIS TRANSAKSI                                      --}}
+        {{-- ===================================================== --}}
+
+        <div class="transaction-type-grid">
+
+          <label class="transaction-type-card">
+
+            <input
+              type="radio"
+              name="type"
+              value="cash_in"
+              {{ type === 'cash_in' ? 'checked' : '' }}
+            >
+
+            <div>
+
+              <strong>
+                ↗ Cash In
+              </strong>
+
+              <span>
+                Uang masuk
+              </span>
+
+            </div>
+
+          </label>
+
+
+          <label class="transaction-type-card">
+
+            <input
+              type="radio"
+              name="type"
+              value="cash_out"
+              {{ type === 'cash_out' ? 'checked' : '' }}
+            >
+
+            <div>
+
+              <strong>
+                ↘ Cash Out
+              </strong>
+
+              <span>
+                Uang keluar
+              </span>
+
+            </div>
+
+          </label>
+
+        </div>
+
+
+        {{-- ===================================================== --}}
+        {{-- GRID FIELD                                             --}}
+        {{-- ===================================================== --}}
+
+        <div class="transaction-fields-grid">
+
+
+          {{-- =================================================== --}}
+          {{-- TANGGAL                                             --}}
+          {{-- =================================================== --}}
+
+          <div class="form-field">
+
+            <label for="transactionDate">
+              Tanggal Transaksi
+            </label>
+
+            <input
+              type="date"
+              id="transactionDate"
+              name="transactionDate"
+              value="{{ transactionDate }}"
+              required
+            >
+
+          </div>
+
+
+          {{-- =================================================== --}}
+          {{-- KATEGORI                                             --}}
+          {{-- =================================================== --}}
+
+          <div class="form-field">
+
+            <label for="category">
+              Kategori
+            </label>
+
+            <select
+              id="category"
+              name="category"
+              onchange="toggleManualCategory(this.value)"
+              required
+            >
+
+              <option value="">
+                Pilih kategori
+              </option>
+
+              <option value="Pembelian">
+                Pembelian
+              </option>
+
+              <option value="Penjualan">
+                Penjualan
+              </option>
+
+              <option value="Operasional">
+                Operasional
+              </option>
+
+              <option value="Gaji">
+                Gaji
+              </option>
+
+              <option value="Transportasi">
+                Transportasi
+              </option>
+
+              <option value="BBM">
+                BBM
+              </option>
+
+              <option value="Listrik">
+                Listrik
+              </option>
+
+              <option value="Air">
+                Air
+              </option>
+
+              <option value="Sewa">
+                Sewa
+              </option>
+
+              <option value="Pajak">
+                Pajak
+              </option>
+
+              <option value="Bank">
+                Bank
+              </option>
+
+              <option value="Investasi">
+                Investasi
+              </option>
+
+              <option value="Lainnya">
+                Lainnya
+              </option>
+
+              <option value="__manual__">
+                ✎ Isi Manual
+              </option>
+
+            </select>
+
+          </div>
+
+
+          {{-- =================================================== --}}
+          {{-- KATEGORI MANUAL                                     --}}
+          {{-- =================================================== --}}
+
+          <div
+            class="form-field"
+            id="manualCategoryWrapper"
+            style="display: none;"
+          >
+
+            <label for="manualCategory">
+              Kategori Manual
+            </label>
+
+            <input
+              type="text"
+              id="manualCategory"
+              name="manualCategory"
+              placeholder="Contoh: Perbaikan kapal"
+              maxlength="100"
+            >
+
+          </div>
+
+
+          {{-- =================================================== --}}
+          {{-- NOMINAL                                             --}}
+          {{-- =================================================== --}}
+
+          <div class="form-field">
+
+            <label for="amount">
+              Nominal
+            </label>
+
+            <div class="money-input">
+
+              <span>
+                Rp
+              </span>
+
+              <input
+                type="number"
+                id="amount"
+                name="amount"
+                min="1"
+                step="1"
+                placeholder="0"
+                required
+              >
+
+            </div>
+
+          </div>
+
+
+          {{-- =================================================== --}}
+          {{-- SUMBER DANA                                         --}}
+          {{-- =================================================== --}}
+
+          <div class="form-field">
+
+            <label for="accountType">
+              Sumber Dana
+            </label>
+
+            <select
+              id="accountType"
+              name="accountType"
+              required
+            >
+
+              <option value="cash">
+                Kas
+              </option>
+
+              <option value="bank">
+                Bank
+              </option>
+
+            </select>
+
+          </div>
+
+
+          {{-- =================================================== --}}
+          {{-- SUMBER / PENERIMA                                   --}}
+          {{-- =================================================== --}}
+
+          <div class="form-field">
+
+            <label for="source">
+              Sumber / Penerima
+            </label>
+
+            <input
+              type="text"
+              id="source"
+              name="source"
+              placeholder="Nama sumber atau penerima"
+              maxlength="255"
+            >
+
+          </div>
+
+
+          {{-- =================================================== --}}
+          {{-- NOMOR REFERENSI                                     --}}
+          {{-- =================================================== --}}
+
+          <div class="form-field">
+
+            <label for="referenceNumber">
+              Nomor Referensi
+            </label>
+
+            <input
+              type="text"
+              id="referenceNumber"
+              name="referenceNumber"
+              placeholder="Nomor invoice / kwitansi"
+              maxlength="255"
+            >
+
+          </div>
+
+
+        </div>
+
+
+        {{-- ===================================================== --}}
+        {{-- KETERANGAN                                            --}}
+        {{-- ===================================================== --}}
+
+        <div class="form-field full-width">
+
+          <label for="description">
+            Keterangan
+          </label>
+
+          <textarea
+            id="description"
+            name="description"
+            rows="5"
+            placeholder="Keterangan transaksi..."
+          ></textarea>
+
+        </div>
+
+
+        {{-- ===================================================== --}}
+        {{-- UPLOAD INVOICE                                        --}}
+        {{-- ===================================================== --}}
+
+        <div class="form-field full-width">
+
+          <label for="invoice">
+            Invoice / Bukti Transaksi
+          </label>
+
+          <input
+            type="file"
+            id="invoice"
+            name="invoice"
+            accept=".jpg,.jpeg,.png,.webp,.pdf"
+          >
+
+          <small class="form-help">
+            Format JPG, PNG, WEBP atau PDF.
+            Maksimal 5 MB.
+          </small>
+
+        </div>
+
+
+        {{-- ===================================================== --}}
+        {{-- ACTION                                                 --}}
+        {{-- ===================================================== --}}
+	
+	<div class="transaction-form-actions">
+
+  <a
+    href="{{ route('transactions.index') }}"
+    class="transaction-cancel-button"
+  >
+    Batal
+  </a>
+
+  <button
+    type="submit"
+    class="transaction-submit-button"
+  >
+    Simpan Transaksi
+  </button>
+
+</div>
+        
+
+      </form>
+
+    </section>
+
+  </main>
+
+</div>
+
+
+{{-- ============================================================= --}}
+{{-- JAVASCRIPT                                                    --}}
+{{-- ============================================================= --}}
+
+<script>
+  function toggleManualCategory(value) {
+    const wrapper = document.getElementById(
+      'manualCategoryWrapper'
+    )
+
+    const input = document.getElementById(
+      'manualCategory'
+    )
+
+    if (!wrapper || !input) {
+      return
+    }
+
+    if (value === '__manual__') {
+      wrapper.style.display = 'block'
+      input.required = true
+      input.focus()
+    } else {
+      wrapper.style.display = 'none'
+      input.required = false
+      input.value = ''
+    }
+  }
+</script>
+
+
+{{-- ============================================================= --}}
+{{-- PENTING: TUTUP @layout()                                      --}}
+{{-- ============================================================= --}}
+
+@end
