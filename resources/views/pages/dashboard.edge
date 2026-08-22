@@ -1,0 +1,268 @@
+@layout()
+
+<div class="dashboard-page">
+
+
+
+  <main class="dashboard-content">
+
+    <section class="dashboard-welcome">
+
+      <div>
+        <span class="dashboard-eyebrow">
+          CASH MANAGEMENT
+        </span>
+
+        <h1>
+          Selamat Datang, {{ user.fullName || user.email }} 👋
+        </h1>
+
+        <p>
+          Kelola arus kas Agro Oasis dengan mudah,
+          terstruktur, dan terpercaya.
+        </p>
+      </div>
+
+      <a
+        href="#"
+        class="quick-cash-button"
+      >
+        + Catat Transaksi
+      </a>
+
+    </section>
+
+
+    <section class="summary-grid">
+
+      <article class="summary-card primary">
+
+        <div class="summary-icon">
+          💰
+        </div>
+
+        <div>
+          <span>Total Saldo Kas</span>
+
+          <strong>Rp 0</strong>
+
+          <small>
+            Saldo saat ini
+          </small>
+        </div>
+
+      </article>
+
+
+      <article class="summary-card">
+
+        <div class="summary-icon">
+          ↗️
+        </div>
+
+        <div>
+          <span>Total Cash In</span>
+
+          <strong>Rp 0</strong>
+
+          <small>
+            Belum ada transaksi
+          </small>
+        </div>
+
+      </article>
+
+
+      <article class="summary-card">
+
+        <div class="summary-icon">
+          ↘️
+        </div>
+
+        <div>
+          <span>Total Cash Out</span>
+
+          <strong>Rp 0</strong>
+
+          <small>
+            Belum ada transaksi
+          </small>
+        </div>
+
+      </article>
+
+
+      <article class="summary-card">
+
+        <div class="summary-icon">
+          🏦
+        </div>
+
+        <div>
+          <span>Saldo Bank</span>
+
+          <strong>Rp 0</strong>
+
+          <small>
+            Belum ada rekening
+          </small>
+        </div>
+
+      </article>
+
+    </section>
+
+
+    <section class="dashboard-grid">
+
+      <div class="dashboard-card transactions-card">
+
+        <div class="card-heading">
+
+          <div>
+            <h2>Transaksi Terbaru</h2>
+
+            <p>
+              Riwayat Cash In dan Cash Out
+            </p>
+          </div>
+
+          <a href="#">
+            Lihat Semua
+          </a>
+
+        </div>
+
+
+        <div class="empty-transactions">
+
+          <div class="empty-icon">
+            💸
+          </div>
+
+          <h3>
+            Belum ada transaksi
+          </h3>
+
+          <p>
+            Transaksi Cash In dan Cash Out
+            yang kamu catat akan muncul di sini.
+          </p>
+
+          <a
+            href="#"
+            class="empty-button"
+          >
+            Catat Cash In
+          </a>
+
+        </div>
+
+      </div>
+
+
+      <div class="dashboard-card">
+
+        <div class="card-heading">
+
+          <div>
+            <h2>Aksi Cepat</h2>
+
+            <p>
+              Kelola transaksi keuangan
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="quick-actions">
+
+          <a href="#" class="quick-action">
+
+            <span>↗</span>
+
+            <div>
+              <strong>Cash In</strong>
+
+              <small>
+                Catat uang masuk
+              </small>
+            </div>
+
+          </a>
+
+
+          <a href="#" class="quick-action">
+
+            <span>↘</span>
+
+            <div>
+              <strong>Cash Out</strong>
+
+              <small>
+                Catat uang keluar
+              </small>
+            </div>
+
+          </a>
+
+
+          <a href="#" class="quick-action">
+
+            <span>🧾</span>
+
+            <div>
+              <strong>Invoice</strong>
+
+              <small>
+                Upload bukti transaksi
+              </small>
+            </div>
+
+          </a>
+
+
+          <a href="#" class="quick-action">
+
+            <span>📊</span>
+
+            <div>
+              <strong>Laporan</strong>
+
+              <small>
+                Lihat laporan keuangan
+              </small>
+            </div>
+
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <section class="dashboard-security">
+
+      <span>🛡️</span>
+
+      <div>
+        <strong>
+          Sistem Terproteksi
+        </strong>
+
+        <p>
+          Data transaksi dan informasi keuangan
+          Agro Oasis dilindungi dengan sistem autentikasi.
+        </p>
+      </div>
+
+    </section>
+
+  </main>
+
+</div>
+
+@end

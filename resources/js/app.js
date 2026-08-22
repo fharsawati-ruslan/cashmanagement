@@ -9,8 +9,12 @@ document.addEventListener('DOMContentLoaded', () => {
    * ========================================
    */
 
-  const clock = document.getElementById('liveClock')
-  const date = document.getElementById('liveDate')
+  const clock =
+  document.getElementById('liveClock') ||
+  document.getElementById('headerClock')
+
+const date = document.getElementById('liveDate')
+
 
   function updateClock() {
     const now = new Date()
@@ -39,6 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
   updateClock()
   setInterval(updateClock, 1000)
 
+
   /*
    * ========================================
    * PASSWORD TOGGLE
@@ -54,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       password.type = isPassword ? 'text' : 'password'
 
-      passwordToggle.textContent = isPassword ? '🙈' : '👁️'
+      passwordToggle.textContent = isPassword ? '🙈' : '👁'
 
       passwordToggle.setAttribute(
         'aria-label',
@@ -65,6 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })
   }
 
+
   /*
    * ========================================
    * DARK / LIGHT MODE
@@ -73,7 +79,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const themeToggle = document.getElementById('themeToggle')
   const themeIcon = document.getElementById('themeIcon')
-  const heroBackground = document.querySelector('.hero-background')
 
   const savedTheme =
     localStorage.getItem('agro-oasis-theme')
@@ -82,41 +87,98 @@ document.addEventListener('DOMContentLoaded', () => {
     document.documentElement.classList.add('dark')
   }
 
-  function updateTheme() {
+  function updateThemeIcon() {
+    if (!themeIcon) {
+      return
+    }
+
     const isDark =
       document.documentElement.classList.contains('dark')
 
-    /*
-     * Icon
-     */
-    if (themeIcon) {
-      themeIcon.textContent = isDark ? '🌙' : '☀️'
-    }
-
-    /*
-     * Hero background
-     */
-    if (heroBackground) {
-      heroBackground.style.backgroundImage = isDark
-        ? 'url("/images/agro-oasis/login-night.webp")'
-        : 'url("/images/agro-oasis/login-day.webp")'
-    }
-
-    /*
-     * Save preference
-     */
-    localStorage.setItem(
-      'agro-oasis-theme',
-      isDark ? 'dark' : 'light'
-    )
+    themeIcon.textContent = isDark ? '🌙' : '☀️'
   }
 
   if (themeToggle) {
     themeToggle.addEventListener('click', () => {
       document.documentElement.classList.toggle('dark')
-      updateTheme()
+
+      const isDark =
+        document.documentElement.classList.contains('dark')
+
+      localStorage.setItem(
+        'agro-oasis-theme',
+        isDark ? 'dark' : 'light'
+      )
+
+      updateThemeIcon()
     })
   }
 
-  updateTheme()
+  updateThemeIcon()
+
+
+  /*
+   * ========================================
+   * DASHBOARD CLOCK
+   * ========================================
+   */
+
+  const dashboardClock =
+    document.getElementById('dashboardClock')
+
+  function updateDashboardClock() {
+    if (!dashboardClock) {
+      return
+    }
+
+    const now = new Date()
+
+    dashboardClock.textContent =
+      now.toLocaleTimeString('id-ID', {
+        timeZone: 'Asia/Jakarta',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false,
+      })
+  }
+
+  updateDashboardClock()
+  setInterval(updateDashboardClock, 1000)
+
+
+  /*
+   * ========================================
+   * DASHBOARD THEME
+   * ========================================
+   */
+
+  const dashboardThemeToggle =
+    document.getElementById('dashboardThemeToggle')
+
+  if (dashboardThemeToggle) {
+    function updateDashboardThemeIcon() {
+      const isDark =
+        document.documentElement.classList.contains('dark')
+
+      dashboardThemeToggle.textContent =
+        isDark ? '🌙' : '☀️'
+    }
+
+    dashboardThemeToggle.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark')
+
+      const isDark =
+        document.documentElement.classList.contains('dark')
+
+      localStorage.setItem(
+        'agro-oasis-theme',
+        isDark ? 'dark' : 'light'
+      )
+
+      updateDashboardThemeIcon()
+    })
+
+    updateDashboardThemeIcon()
+  }
 })

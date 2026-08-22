@@ -2507,3 +2507,390 @@ html.dark .feature-text small {
     animation-iteration-count: 1 !important;
   }
 }
+
+
+
+
+/* =========================================================
+   AGRO OASIS APPLICATION HEADER
+========================================================= */
+
+.app-header {
+  width: 100%;
+  background: var(--surface, #ffffff);
+  border-bottom: 1px solid var(--border, #d9e2ec);
+  position: relative;
+  z-index: 50;
+}
+
+.app-header-inner {
+  width: 100%;
+  min-height: 72px;
+
+  padding: 0 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 24px;
+}
+
+.app-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  text-decoration: none;
+
+  color: inherit;
+}
+
+.app-brand-logo {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background: linear-gradient(
+    135deg,
+    #1297d8,
+    #29a85a
+  );
+
+  color: white;
+
+  font-size: 15px;
+  font-weight: 800;
+
+  box-shadow:
+    0 8px 18px rgba(41, 168, 90, 0.18);
+}
+
+.app-brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.app-brand-name {
+  font-size: 17px;
+  font-weight: 800;
+  color: #103f78;
+}
+
+.app-brand-subtitle {
+  margin-top: 3px;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 0.7px;
+
+  color: #168a3d;
+}
+
+.app-brand-tagline {
+  margin-top: 4px;
+
+  font-size: 8px;
+
+  color: #718096;
+}
+
+/* HEADER ACTIONS */
+
+.app-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* LIVE */
+
+.header-live {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  font-size: 11px;
+  color: #718096;
+}
+
+.header-live-dot {
+  width: 8px;
+  height: 8px;
+
+  border-radius: 999px;
+
+  background: #32b35b;
+
+  box-shadow:
+    0 0 0 4px rgba(50, 179, 91, 0.10);
+}
+
+/* THEME */
+
+.header-theme-toggle {
+  width: 38px;
+  height: 38px;
+
+  border: 1px solid var(--border, #d9e2ec);
+
+  border-radius: 11px;
+
+  background: var(--surface, #ffffff);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  font-size: 16px;
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.header-theme-toggle:hover {
+  transform: translateY(-1px);
+
+  border-color: #28a456;
+}
+
+/* USER */
+
+.header-user {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.header-user-avatar {
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #e8f5ec;
+
+  color: #168a3d;
+
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.header-user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.header-user-name {
+  font-size: 11px;
+  font-weight: 700;
+
+  color: var(--text, #173b63);
+}
+
+.header-user-role {
+  font-size: 8px;
+
+  color: #8a98a8;
+}
+
+/* LOGOUT */
+
+.header-logout {
+  height: 38px;
+
+  padding: 0 16px;
+
+  border: 1px solid #efb8b8;
+
+  border-radius: 10px;
+
+  background: #fff;
+
+  color: #d64b4b;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.header-logout:hover {
+  background: #fff4f4;
+  transform: translateY(-1px);
+}
+
+/* LOGIN */
+
+.header-login {
+  height: 38px;
+
+  padding: 0 16px;
+
+  display: flex;
+  align-items: center;
+
+  border-radius: 9px;
+
+  background: #208f45;
+
+  color: white;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  text-decoration: none;
+}
+
+/* =========================================================
+   DARK MODE HEADER
+========================================================= */
+
+.dark .app-header {
+  background: #081711;
+  border-color: #18372a;
+}
+
+.dark .app-brand-name {
+  color: #ffffff;
+}
+
+.dark .app-brand-tagline {
+  color: #8ba39a;
+}
+
+.dark .header-live {
+  color: #94a9a0;
+}
+
+.dark .header-theme-toggle {
+  background: #0c2018;
+  border-color: #254638;
+}
+
+.dark .header-user-name {
+  color: #ffffff;
+}
+
+.dark .header-user-role {
+  color: #799188;
+}
+
+.dark .header-user-avatar {
+  background: #123b29;
+  color: #52c77a;
+}
+
+.dark .header-logout {
+  background: transparent;
+  border-color: #744343;
+  color: #ff8d8d;
+}
+
+/* =========================================================
+   MOBILE HEADER
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .app-header-inner {
+    min-height: 64px;
+
+    padding: 0 16px;
+
+    gap: 12px;
+  }
+
+  .app-brand-logo {
+    width: 38px;
+    height: 38px;
+
+    border-radius: 10px;
+  }
+
+  .app-brand-name {
+    font-size: 15px;
+  }
+
+  .app-brand-subtitle {
+    font-size: 8px;
+  }
+
+  .app-brand-tagline {
+    display: none;
+  }
+
+  .header-live {
+    display: none;
+  }
+
+  .header-user-info {
+    display: none;
+  }
+
+  .header-user-avatar {
+    width: 34px;
+    height: 34px;
+  }
+
+  .header-theme-toggle {
+    width: 34px;
+    height: 34px;
+  }
+
+  .header-logout {
+    height: 34px;
+
+    padding: 0 11px;
+
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 420px) {
+
+  .app-header-inner {
+    padding: 0 12px;
+  }
+
+  .app-brand {
+    gap: 8px;
+  }
+
+  .app-brand-name {
+    font-size: 14px;
+  }
+
+  .app-header-actions {
+    gap: 7px;
+  }
+
+  .header-user {
+    display: none;
+  }
+
+  .header-logout {
+    padding: 0 10px;
+  }
+}
