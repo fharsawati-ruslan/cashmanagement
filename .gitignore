@@ -25,3 +25,26 @@ yarn-error.log
 # Platform specific
 .DS_Store
 .env
+
+# Environment dan secret
+.env.*
+!.env.example
+!.env.sample
+
+# Database dan data runtime
+*.sqlite
+*.sqlite3
+*.db
+*.sql
+*.dump
+*.backup
+tmp/
+storage/uploads/
+public/uploads/
+
+# Backup file editor/manual
+*.bak
+*.bak.*
+*.bak-*
+*.before
+*.old

@@ -176,7 +176,6 @@ export default class CashTransactionsController {
     const today = DateTime.now().toFormat('yyyyMMdd')
 
     const lastTransaction = await CashTransaction.query()
-      .where('type', type)
       .where(
         'transactionCode',
         'like',
@@ -189,10 +188,9 @@ export default class CashTransactionsController {
 
     if (lastTransaction) {
       const parts = lastTransaction.transactionCode.split('-')
-
       const lastSequence = Number(parts[2])
 
-      if (Number.isFinite(lastSequence)) {
+      if (Number.isInteger(lastSequence) && lastSequence >= 1) {
         sequence = lastSequence + 1
       }
     }

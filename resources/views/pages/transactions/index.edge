@@ -1,0 +1,162 @@
+@layout()
+
+<div class="transactions-page">
+
+  <div class="transactions-header">
+
+    <div>
+      <span class="dashboard-eyebrow">
+        CASH MANAGEMENT
+      </span>
+
+      <h1>Transaksi Kas</h1>
+
+      <p>
+        Kelola seluruh transaksi Cash In dan Cash Out Agro Oasis.
+      </p>
+    </div>
+
+    <a
+      href="/transactions/create"
+      class="quick-cash-button"
+    >
+      + Catat Transaksi
+    </a>
+
+  </div>
+
+
+  <div class="dashboard-card transactions-list-card">
+
+    <div class="card-heading">
+
+      <div>
+        <h2>Riwayat Transaksi</h2>
+
+        <p>
+          Daftar transaksi terbaru.
+        </p>
+      </div>
+
+    </div>
+
+
+    @if(transactions.length === 0)
+
+      <div class="empty-transactions">
+
+        <div class="empty-icon">
+          💸
+        </div>
+
+        <h3>
+          Belum ada transaksi
+        </h3>
+
+        <p>
+          Transaksi Cash In dan Cash Out yang kamu catat
+          akan muncul di sini.
+        </p>
+
+        <a
+          href="/transactions/create"
+          class="empty-button"
+        >
+          Catat Transaksi
+        </a>
+
+      </div>
+
+    @else
+
+      <div class="transactions-table-wrapper">
+
+        <table class="transactions-table">
+
+          <thead>
+            <tr>
+              <th>Kode</th>
+              <th>Tanggal</th>
+              <th>Jenis</th>
+              <th>Kategori</th>
+              <th>Akun</th>
+              <th>Nominal</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            @each(transaction in transactions)
+
+              <tr>
+
+                <td>
+                  <strong>
+                    {{ transaction.transactionCode }}
+                  </strong>
+                </td>
+
+                <td>
+                  {{ transaction.transactionDate.toFormat('dd/MM/yyyy') }}
+                </td>
+
+                <td>
+
+                  @if(transaction.type === 'cash_in')
+                    <span class="transaction-badge cash-in">
+                      Cash In
+                    </span>
+                  @else
+                    <span class="transaction-badge cash-out">
+                      Cash Out
+                    </span>
+                  @end
+
+                </td>
+
+                <td>
+                  {{ transaction.category }}
+                </td>
+
+                <td>
+                  {{ transaction.accountType === 'cash' ? 'Kas' : 'Bank' }}
+                </td>
+
+                <td>
+                  <strong>
+                    Rp {{ transaction.amount.toLocaleString('id-ID') }}
+                  </strong>
+                </td>
+
+                <td>
+                  {{ transaction.status === 'posted' ? 'Posted' : 'Cancelled' }}
+                </td>
+
+                <td>
+                  <a
+                    href="/transactions/{{ transaction.id }}"
+                    class="transaction-detail-link"
+                  >
+                    Detail
+                  </a>
+                </td>
+
+              </tr>
+
+            @end
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    @end
+
+  </div>
+
+</div>
+
+@end

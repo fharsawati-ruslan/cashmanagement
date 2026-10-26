@@ -4,6 +4,7 @@
  */
 
 export const controllers = {
+  CashTransactions: () => import('#controllers/cash_transactions_controller'),
   Dashboard: () => import('#controllers/dashboard_controller'),
   NewAccount: () => import('#controllers/new_account_controller'),
   Session: () => import('#controllers/session_controller'),

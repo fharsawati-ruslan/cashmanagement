@@ -182,3 +182,170 @@ const date = document.getElementById('liveDate')
     updateDashboardThemeIcon()
   }
 })
+
+
+/**
+ * =========================================================
+ * Dashboard realtime
+ * =========================================================
+ */
+
+function formatRupiah(value) {
+  return `Rp ${Number(value || 0).toLocaleString('id-ID')}`
+}
+
+function updateDashboardSummary(data) {
+  const cashBalance = document.getElementById('cashBalance')
+  const totalCashIn = document.getElementById('totalCashIn')
+  const totalCashOut = document.getElementById('totalCashOut')
+  const bankBalance = document.getElementById('bankBalance')
+
+  if (cashBalance) {
+    cashBalance.textContent = formatRupiah(data.cashBalance)
+  }
+
+  if (totalCashIn) {
+    totalCashIn.textContent = formatRupiah(data.totalCashIn)
+  }
+
+  if (totalCashOut) {
+    totalCashOut.textContent = formatRupiah(data.totalCashOut)
+  }
+
+  if (bankBalance) {
+    bankBalance.textContent = formatRupiah(data.bankBalance)
+  }
+
+  updateLatestTransactions(data.latestTransactions || [])
+}
+
+function updateLatestTransactions(transactions) {
+  const container = document.getElementById(
+    'transactionsContainer'
+  )
+
+  if (!container) {
+    return
+  }
+
+  if (transactions.length === 0) {
+    container.innerHTML = `
+      <div id="emptyTransactionState">
+
+        <div class="empty-icon">
+          💸
+        </div>
+
+        <h3>
+          Belum ada transaksi
+        </h3>
+
+        <p>
+          Transaksi Cash In dan Cash Out
+          yang kamu catat akan muncul di sini.
+        </p>
+
+        <a
+          href="/transactions/create"
+          class="empty-button"
+        >
+          Catat Cash In
+        </a>
+
+      </div>
+    `
+
+    return
+  }
+
+  container.innerHTML = `
+    <div class="dashboard-transaction-list">
+
+      ${transactions
+        .map((transaction) => {
+          const isCashIn = transaction.type === 'cash_in'
+
+          return `
+            <a
+              href="/transactions/${transaction.id}"
+              class="dashboard-transaction-item"
+            >
+
+              <div class="dashboard-transaction-icon">
+                ${isCashIn ? '↗' : '↘'}
+              </div>
+
+              <div class="dashboard-transaction-info">
+
+                <strong>
+                  ${escapeHtml(transaction.transactionCode)}
+                </strong>
+
+                <small>
+                  ${escapeHtml(transaction.category)}
+                  •
+                  ${escapeHtml(transaction.transactionDate)}
+                </small>
+
+              </div>
+
+              <div
+                class="dashboard-transaction-amount ${
+                  isCashIn ? 'income' : 'expense'
+                }"
+              >
+                ${isCashIn ? '+' : '-'}
+                ${formatRupiah(transaction.amount)}
+              </div>
+
+            </a>
+          `
+        })
+        .join('')}
+
+    </div>
+  `
+}
+
+function escapeHtml(value) {
+  return String(value ?? '')
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#039;')
+}
+
+async function refreshDashboard() {
+  const dashboard = document.getElementById('cashBalance')
+
+  if (!dashboard) {
+    return
+  }
+
+  try {
+    const response = await fetch('/dashboard/summary', {
+      headers: {
+        Accept: 'application/json',
+      },
+      cache: 'no-store',
+    })
+
+    if (!response.ok) {
+      return
+    }
+
+    const data = await response.json()
+
+    updateDashboardSummary(data)
+  } catch (error) {
+    console.error(
+      'Dashboard realtime update failed:',
+      error
+    )
+  }
+}
+
+if (document.getElementById('cashBalance')) {
+  setInterval(refreshDashboard, 10000)
+}

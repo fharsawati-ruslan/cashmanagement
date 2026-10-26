@@ -7,6 +7,45 @@
 import { BaseModel, column } from '@adonisjs/lucid/orm'
 import { DateTime } from 'luxon'
 
+export class CashTransactionSchema extends BaseModel {
+  static $columns = ['accountType', 'amount', 'attachmentContentType', 'attachmentOriginalName', 'attachmentPath', 'category', 'createdAt', 'createdBy', 'description', 'id', 'referenceNumber', 'source', 'status', 'transactionCode', 'transactionDate', 'type', 'updatedAt'] as const
+  $columns = CashTransactionSchema.$columns
+  @column()
+  declare accountType: string
+  @column()
+  declare amount: string
+  @column()
+  declare attachmentContentType: string | null
+  @column()
+  declare attachmentOriginalName: string | null
+  @column()
+  declare attachmentPath: string | null
+  @column()
+  declare category: string
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column()
+  declare createdBy: number | null
+  @column()
+  declare description: string | null
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare referenceNumber: string | null
+  @column()
+  declare source: string | null
+  @column()
+  declare status: string
+  @column()
+  declare transactionCode: string
+  @column.date()
+  declare transactionDate: DateTime
+  @column()
+  declare type: string
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+}
+
 export class UserSchema extends BaseModel {
   static $columns = ['createdAt', 'email', 'fullName', 'id', 'password', 'updatedAt'] as const
   $columns = UserSchema.$columns

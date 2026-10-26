@@ -1,0 +1,221 @@
+@layout()
+
+<div class="dashboard-page">
+
+  <main class="dashboard-content">
+
+    <section class="dashboard-welcome">
+
+      <div>
+        <span class="dashboard-eyebrow">
+          CASH MANAGEMENT
+        </span>
+
+        <h1>
+          Detail Transaksi
+        </h1>
+
+        <p>
+          Informasi lengkap transaksi kas Agro Oasis.
+        </p>
+      </div>
+
+      <a
+        href="{{ route('transactions.index') }}"
+        class="quick-cash-button"
+      >
+        ← Kembali
+      </a>
+
+    </section>
+
+
+    <section class="dashboard-card transaction-detail-card">
+
+      <div class="card-heading">
+
+        <div>
+          <h2>
+            {{ transaction.transactionCode }}
+          </h2>
+
+          <p>
+            Detail transaksi
+          </p>
+        </div>
+
+        @if(transaction.type === 'cash_in')
+          <span class="transaction-badge cash-in">
+            Cash In
+          </span>
+        @else
+          <span class="transaction-badge cash-out">
+            Cash Out
+          </span>
+        @end
+
+      </div>
+
+
+      <div class="transaction-detail-grid">
+
+        <div class="detail-item">
+          <span>Kode Transaksi</span>
+          <strong>
+            {{ transaction.transactionCode }}
+          </strong>
+        </div>
+
+
+        <div class="detail-item">
+          <span>Tanggal</span>
+          <strong>
+            {{ transaction.transactionDate.toFormat('dd/MM/yyyy') }}
+          </strong>
+        </div>
+
+
+        <div class="detail-item">
+          <span>Jenis Transaksi</span>
+
+          <strong>
+            @if(transaction.type === 'cash_in')
+              Cash In
+            @else
+              Cash Out
+            @end
+          </strong>
+        </div>
+
+
+        <div class="detail-item">
+          <span>Kategori</span>
+
+          <strong>
+            {{ transaction.category }}
+          </strong>
+        </div>
+
+
+        <div class="detail-item">
+          <span>Sumber Dana</span>
+
+          <strong>
+            @if(transaction.accountType === 'cash')
+              Kas
+            @else
+              Bank
+            @end
+          </strong>
+        </div>
+
+
+        <div class="detail-item">
+          <span>Nominal</span>
+
+          <strong class="detail-amount">
+            Rp {{ transaction.amount.toLocaleString('id-ID') }}
+          </strong>
+        </div>
+
+
+        <div class="detail-item">
+          <span>Sumber / Penerima</span>
+
+          <strong>
+            {{ transaction.source || '-' }}
+          </strong>
+        </div>
+
+
+        <div class="detail-item">
+          <span>Nomor Referensi</span>
+
+          <strong>
+            {{ transaction.referenceNumber || '-' }}
+          </strong>
+        </div>
+
+
+        <div class="detail-item">
+          <span>Status</span>
+
+          <strong>
+            {{ transaction.status === 'posted' ? 'Posted' : 'Cancelled' }}
+          </strong>
+        </div>
+
+
+        <div class="detail-item">
+          <span>Dibuat Oleh</span>
+
+          <strong>
+            @if(transaction.creator)
+              {{ transaction.creator.fullName || transaction.creator.email }}
+            @else
+              -
+            @end
+          </strong>
+        </div>
+
+      </div>
+
+
+      <div class="detail-description">
+
+        <span>Keterangan</span>
+
+        <p>
+          {{ transaction.description || 'Tidak ada keterangan.' }}
+        </p>
+
+      </div>
+
+
+      @if(transaction.attachmentPath)
+
+        <div class="detail-attachment">
+
+          <div>
+            <span class="attachment-icon">
+              🧾
+            </span>
+
+            <div>
+              <strong>
+                Invoice / Bukti Transaksi
+              </strong>
+
+              <small>
+                {{ transaction.attachmentOriginalName || 'Lampiran transaksi' }}
+              </small>
+            </div>
+          </div>
+
+          <a
+            href="/uploads/{{ transaction.attachmentPath.replace('uploads/', '') }}"
+            target="_blank"
+            rel="noopener"
+            class="attachment-button"
+          >
+            Lihat Bukti
+          </a>
+
+        </div>
+
+      @else
+
+        <div class="detail-no-attachment">
+          🧾 Tidak ada invoice atau bukti transaksi.
+        </div>
+
+      @end
+
+
+    </section>
+
+  </main>
+
+</div>
+
+@end
