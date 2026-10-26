@@ -48,3 +48,15 @@ public/uploads/
 *.bak-*
 *.before
 *.old
+node_modules/
+.next/
+vendor/
+*.sql.gz
+*.backup*
+*.before-*
+backups/
+.cache/
+.npm/
+mysql,
+*.pem
+*.key
